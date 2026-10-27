@@ -17,9 +17,9 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
   final MobileScannerController _controller = MobileScannerController(
     detectionSpeed: DetectionSpeed.noDuplicates,
     facing: CameraFacing.back,
-    torchEnabled: false,
   );
   bool _isProcessing = false;
+  bool _isTorchOn = false;
 
   @override
   void dispose() {
@@ -70,16 +70,14 @@ class _QrScannerScreenState extends State<QrScannerScreen> {
         backgroundColor: Colors.transparent,
         actions: [
           IconButton(
-            icon: ValueListenableBuilder<TorchState>(
-              valueListenable: _controller.torchState,
-              builder: (context, state, child) {
-                return Icon(
-                  state == TorchState.on ? Icons.flash_on : Icons.flash_off,
-                  color: state == TorchState.on ? AppTheme.gold : Colors.white,
-                );
-              },
+            icon: Icon(
+              _isTorchOn ? Icons.flash_on : Icons.flash_off,
+              color: _isTorchOn ? AppTheme.gold : Colors.white,
             ),
-            onPressed: () => _controller.toggleTorch(),
+            onPressed: () {
+              _controller.toggleTorch();
+              setState(() => _isTorchOn = !_isTorchOn);
+            },
           ),
           IconButton(
             icon: const Icon(Icons.flip_camera_android),

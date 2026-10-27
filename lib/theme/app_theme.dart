@@ -23,7 +23,6 @@ class AppTheme {
         primary: primaryGreen,
         secondary: gold,
         surface: cardSurface,
-        background: darkBackground,
         error: alertRed,
       ),
       textTheme: GoogleFonts.interTextTheme(
@@ -43,7 +42,7 @@ class AppTheme {
         ),
         iconTheme: IconThemeData(color: textLight),
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: cardSurface,
         elevation: 0,
         shape: RoundedRectangleBorder(

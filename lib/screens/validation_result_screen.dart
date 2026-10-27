@@ -40,7 +40,6 @@ class ValidationResultScreen extends StatelessWidget {
         break;
       case ValidationStatus.cancelled:
       case ValidationStatus.error:
-      default:
         statusColor = AppTheme.greyCancelled;
         statusIcon = Icons.block_flipped;
         statusTitle = result.status == ValidationStatus.cancelled
