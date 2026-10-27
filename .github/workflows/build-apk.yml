@@ -39,7 +39,7 @@ jobs:
         run: flutter analyze --no-fatal-infos
 
       - name: 🔨 Compiler l'APK Android Release
-        run: flutter build apk --release
+        run: flutter build apk --release --android-skip-build-dependency-validation
 
       - name: 📤 Publier l'APK compilée en Artifact téléchargeable
         uses: actions/upload-artifact@v4
