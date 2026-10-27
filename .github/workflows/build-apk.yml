@@ -1,0 +1,50 @@
+name: Compiler APK Android Release
+
+on:
+  push:
+    branches:
+      - main
+      - 'feature/**'
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch: # Permet de lancer la compilation manuellement en 1 clic depuis l'onglet Actions de GitHub
+
+jobs:
+  build:
+    name: Build Android Release APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Récupérer le code source
+        uses: actions/checkout@v4
+
+      - name: ☕ Configurer Java JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: 🚀 Configurer Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: 📦 Installer les dépendances Flutter
+        run: flutter pub get
+
+      - name: 🔍 Vérifier le code (Analyse statique)
+        run: flutter analyze --no-fatal-infos
+
+      - name: 🔨 Compiler l'APK Android Release
+        run: flutter build apk --release
+
+      - name: 📤 Publier l'APK compilée en Artifact téléchargeable
+        uses: actions/upload-artifact@v4
+        with:
+          name: ligue-du-fouta-release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
+          retention-days: 30
