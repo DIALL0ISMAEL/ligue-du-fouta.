@@ -1,3 +1,9 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -15,15 +21,6 @@ def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
     flutterVersionName = '1.0.0'
 }
-
-def flutterRoot = localProperties.getProperty('flutter.sdk')
-if (flutterRoot == null) {
-    flutterRoot = System.getenv("FLUTTER_ROOT") ?: System.getenv("FLUTTER_HOME")
-}
-
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
     namespace "com.liguedufouta.tickets"
@@ -52,7 +49,6 @@ android {
 
     buildTypes {
         release {
-            // Utilise la cle de debug par defaut pour permettre l'installation directe du build release sans certificat payant
             signingConfig signingConfigs.debug
             minifyEnabled false
             shrinkResources false
